@@ -5,6 +5,7 @@ import {
   Popup,
 } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
+import MarkerClusterGroup from "react-leaflet-cluster";
 
 function WindMap() {
   const stations = [
@@ -24,17 +25,19 @@ function WindMap() {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
 
-      {stations.map((station, index) => (
-  <Marker key={index} position={station.position}>
-    <Popup>
-      <strong>{station.name}</strong>
-      <br />
-      Latitude: {station.position[0]}
-      <br />
-      Longitude: {station.position[1]}
-    </Popup>
-  </Marker>
-))}
+      <MarkerClusterGroup>
+  {stations.map((station, index) => (
+    <Marker key={index} position={station.position}>
+      <Popup>
+        <strong>{station.name}</strong>
+        <br />
+        Latitude: {station.position[0]}
+        <br />
+        Longitude: {station.position[1]}
+      </Popup>
+    </Marker>
+  ))}
+</MarkerClusterGroup>
     </MapContainer>
   );
 }

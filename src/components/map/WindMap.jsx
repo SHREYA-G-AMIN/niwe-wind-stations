@@ -1,4 +1,9 @@
-import { MapContainer, TileLayer, Marker } from "react-leaflet";
+import {
+  MapContainer,
+  TileLayer,
+  Marker,
+  Popup,
+} from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 
 function WindMap() {
@@ -20,8 +25,16 @@ function WindMap() {
       />
 
       {stations.map((station, index) => (
-        <Marker key={index} position={station.position} />
-      ))}
+  <Marker key={index} position={station.position}>
+    <Popup>
+      <strong>{station.name}</strong>
+      <br />
+      Latitude: {station.position[0]}
+      <br />
+      Longitude: {station.position[1]}
+    </Popup>
+  </Marker>
+))}
     </MapContainer>
   );
 }

@@ -12,17 +12,16 @@ import "leaflet/dist/leaflet.css";
 
 function WindMap() {
   const [states, setStates] = useState(null);
-
-  const stations = [
-    { name: "Test Station 1", position: [12.9716, 77.5946] },
-    { name: "Test Station 2", position: [19.076, 72.8777] },
-    { name: "Test Station 3", position: [28.6139, 77.209] },
-  ];
+  const [stations, setStations] = useState(null);
 
   useEffect(() => {
     fetch("/data/india-states.json")
       .then((response) => response.json())
       .then((data) => setStates(data));
+
+    fetch("/data/stations.geojson")
+      .then((response) => response.json())
+      .then((data) => setStations(data));
   }, []);
 
   return (
@@ -32,35 +31,44 @@ function WindMap() {
       style={{ height: "500px", width: "100%" }}
     >
       <LayersControl position="topright">
-  <LayersControl.BaseLayer checked name="Street Map">
-    <TileLayer
-      attribution="&copy; OpenStreetMap contributors"
-      url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-    />
-  </LayersControl.BaseLayer>
+        <LayersControl.BaseLayer checked name="Street Map">
+          <TileLayer
+            attribution="&copy; OpenStreetMap contributors"
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+          />
+        </LayersControl.BaseLayer>
 
-  <LayersControl.BaseLayer name="Satellite">
-    <TileLayer
-      attribution="Tiles &copy; Esri"
-      url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-    />
-  </LayersControl.BaseLayer>
-</LayersControl>
+        <LayersControl.BaseLayer name="Satellite">
+          <TileLayer
+            attribution="Tiles &copy; Esri"
+            url="https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
+          />
+        </LayersControl.BaseLayer>
+      </LayersControl>
 
       {states && <GeoJSON data={states} />}
 
       <MarkerClusterGroup>
-        {stations.map((station, index) => (
-          <Marker key={index} position={station.position}>
-            <Popup>
-              <strong>{station.name}</strong>
-              <br />
-              Latitude: {station.position[0]}
-              <br />
-              Longitude: {station.position[1]}
-            </Popup>
-          </Marker>
-        ))}
+        {stations?.features.map((station, index) => {
+          const [longitude, latitude] = station.geometry.coordinates;
+
+          return (
+            <Marker
+              key={index}
+              position={[latitude, longitude]}
+            >
+              <Popup>
+                <strong>{station.properties.name}</strong>
+                <br />
+                State: {station.properties.state}
+                <br />
+                Latitude: {latitude}
+                <br />
+                Longitude: {longitude}
+              </Popup>
+            </Marker>
+          );
+        })}
       </MarkerClusterGroup>
     </MapContainer>
   );

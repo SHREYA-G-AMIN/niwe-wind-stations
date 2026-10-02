@@ -1,0 +1,38 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.5946, 12.9716]
+      },
+      "properties": {
+        "name": "Test Station 1",
+        "state": "Karnataka"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [72.8777, 19.076]
+      },
+      "properties": {
+        "name": "Test Station 2",
+        "state": "Maharashtra"
+      }
+    },
+    {
+      "type": "Feature",
+      "geometry": {
+        "type": "Point",
+        "coordinates": [77.209, 28.6139]
+      },
+      "properties": {
+        "name": "Test Station 3",
+        "state": "Delhi"
+      }
+    }
+  ]
+}

@@ -9,7 +9,8 @@
       },
       "properties": {
         "name": "Test Station 1",
-        "state": "Karnataka"
+        "state": "Karnataka",
+        "status": "In Operation"
       }
     },
     {
@@ -20,7 +21,8 @@
       },
       "properties": {
         "name": "Test Station 2",
-        "state": "Maharashtra"
+        "state": "Maharashtra",
+        "status": "Closed"
       }
     },
     {
@@ -31,7 +33,8 @@
       },
       "properties": {
         "name": "Test Station 3",
-        "state": "Delhi"
+        "state": "Delhi",
+        "status": "In Operation"
       }
     }
   ]

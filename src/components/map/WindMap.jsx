@@ -3,6 +3,7 @@ import {
   MapContainer,
   TileLayer,
   Marker,
+  Tooltip,
   Popup,
   GeoJSON,
   LayersControl,
@@ -261,48 +262,54 @@ function WindMap({ stations, states }) {
 
           return (
             <Marker
-              key={index}
-              position={[latitude, longitude]}
-              icon={
-                station.properties.status === "In Operation"
-                  ? operationIcon
-                  : closedIcon
-              }
-            >
-              <Popup>
-                <div className="station-popup">
-                  <h3>{station.properties.name}</h3>
+  key={index}
+  position={[latitude, longitude]}
+  icon={
+    station.properties.status === "In Operation"
+      ? operationIcon
+      : closedIcon
+  }
+>
+  <Tooltip>
+    <strong>{station.properties.name}</strong>
+    <br />
+    Status: {station.properties.status}
+  </Tooltip>
 
-                  <div className="popup-status">
-                    <strong>Status:</strong>{" "}
-                    {station.properties.status}
-                  </div>
+  <Popup>
+    <div className="station-popup">
+      <h3>{station.properties.name}</h3>
 
-                  <p>
-                    <strong>State:</strong>{" "}
-                    {station.properties.state}
-                  </p>
+      <div className="popup-status">
+        <strong>Status:</strong>{" "}
+        {station.properties.status}
+      </div>
 
-                  <p>
-                    <strong>District:</strong>{" "}
-                    {station.properties.district || "N/A"}
-                  </p>
+      <p>
+        <strong>State:</strong>{" "}
+        {station.properties.state}
+      </p>
 
-                  <p>
-                    <strong>Mast Height:</strong>{" "}
-                    {station.properties.mast_height
-                      ? `${station.properties.mast_height} m`
-                      : "N/A"}
-                  </p>
+      <p>
+        <strong>District:</strong>{" "}
+        {station.properties.district || "N/A"}
+      </p>
 
-                  <p>
-                    <strong>Coordinates:</strong>
-                    <br />
-                    {latitude}, {longitude}
-                  </p>
-                </div>
-              </Popup>
-            </Marker>
+      <p>
+        <strong>Mast Height:</strong>{" "}
+        {station.properties.mast_height
+          ? `${station.properties.mast_height} m`
+          : "N/A"}
+      </p>
+
+      <p>
+        <strong>Coordinates:</strong>
+        <br />
+        {latitude}, {longitude}
+      </p>
+    </div>
+  </Popup>
+</Marker>
           );
         })}
       </MarkerClusterGroup>

@@ -156,26 +156,35 @@ className="map-container"
               }
             >
               <Popup>
-                <strong>{station.properties.name}</strong>
-                <hr />
+  <div className="station-popup">
+    <h3>{station.properties.name}</h3>
 
-                <strong>State:</strong> {station.properties.state}
-                <br />
+    <div className="popup-status">
+      <strong>Status:</strong>{" "}
+      {station.properties.status}
+    </div>
 
-                <strong>District:</strong> {station.properties.district}
-                <br />
+    <p>
+      <strong>State:</strong> {station.properties.state}
+    </p>
 
-                <strong>Status:</strong> {station.properties.status}
-                <br />
+    <p>
+      <strong>District:</strong> {station.properties.district || "N/A"}
+    </p>
 
-                <strong>Mast Height:</strong> {station.properties.mast_height} m
-                <br />
+    <p>
+      <strong>Mast Height:</strong>{" "}
+      {station.properties.mast_height
+        ? `${station.properties.mast_height} m`
+        : "N/A"}
+    </p>
 
-                <strong>Latitude:</strong> {latitude}
-                <br />
-
-                <strong>Longitude:</strong> {longitude}
-              </Popup>
+    <p>
+      <strong>Coordinates:</strong><br />
+      {latitude}, {longitude}
+    </p>
+  </div>
+</Popup>
             </Marker>
           );
         })}

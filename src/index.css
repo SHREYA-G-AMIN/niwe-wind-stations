@@ -125,3 +125,16 @@ code {
     height: 350px;
   }
 }
+
+.station-popup h3 {
+  margin: 0 0 8px;
+  font-size: 16px;
+}
+
+.station-popup p {
+  margin: 5px 0;
+}
+
+.popup-status {
+  margin-bottom: 8px;
+}

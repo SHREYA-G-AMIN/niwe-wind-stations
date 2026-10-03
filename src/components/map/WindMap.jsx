@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -13,6 +13,10 @@ import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 import "leaflet.fullscreen";
 import "leaflet.fullscreen/dist/Control.FullScreen.css";
+
+// --------------------
+// Marker Icons
+// --------------------
 
 const operationIcon = new L.Icon({
   iconUrl:
@@ -34,11 +38,17 @@ const closedIcon = new L.Icon({
   popupAnchor: [1, -34],
 });
 
+// --------------------
+// Map Legend
+// --------------------
+
 function MapLegend() {
   const map = useMap();
 
   useEffect(() => {
-    const legend = L.control({ position: "bottomright" });
+    const legend = L.control({
+      position: "bottomright",
+    });
 
     legend.onAdd = () => {
       const div = L.DomUtil.create("div");
@@ -73,6 +83,10 @@ function MapLegend() {
   return null;
 }
 
+// --------------------
+// Fit Map To Stations
+// --------------------
+
 function FitMapToStations({ stations }) {
   const map = useMap();
 
@@ -82,6 +96,7 @@ function FitMapToStations({ stations }) {
     const bounds = L.latLngBounds(
       stations.features.map((station) => {
         const [longitude, latitude] = station.geometry.coordinates;
+
         return [latitude, longitude];
       })
     );
@@ -93,6 +108,11 @@ function FitMapToStations({ stations }) {
 
   return null;
 }
+
+// --------------------
+// Fullscreen Control
+// --------------------
+
 function FullscreenControl() {
   const map = useMap();
 
@@ -113,14 +133,79 @@ function FullscreenControl() {
   return null;
 }
 
+// --------------------
+// Scale Control
+// --------------------
+
+function ScaleControl() {
+  const map = useMap();
+
+  useEffect(() => {
+    const scale = L.control.scale({
+      position: "bottomleft",
+      imperial: false,
+    });
+
+    scale.addTo(map);
+
+    return () => {
+      map.removeControl(scale);
+    };
+  }, [map]);
+
+  return null;
+}
+
+// --------------------
+// Reset Map Control
+// --------------------
+
+function ResetMapControl() {
+  const map = useMap();
+
+  const resetMap = () => {
+    map.setView([20.5937, 78.9629], 5);
+  };
+
+  return (
+    <button
+      onClick={resetMap}
+      style={{
+        position: "absolute",
+        top: "120px",
+        left: "10px",
+        zIndex: 1000,
+        background: "white",
+        border: "2px solid rgba(0,0,0,0.2)",
+        borderRadius: "4px",
+        padding: "6px 10px",
+        cursor: "pointer",
+        fontSize: "14px",
+      }}
+    >
+      🇮🇳 Reset India
+    </button>
+  );
+}
+
+// --------------------
+// Wind Map
+// --------------------
+
 function WindMap({ stations, states }) {
   return (
     <MapContainer
-  center={[20.5937, 78.9629]}
-  zoom={5}
-className="map-container"  
->
-  <FullscreenControl />
+      center={[20.5937, 78.9629]}
+      zoom={5}
+      className="map-container"
+    >
+      <FullscreenControl />
+
+      <ScaleControl />
+
+      <ResetMapControl />
+
+      {/* Map Layers */}
       <LayersControl position="topright">
         <LayersControl.BaseLayer checked name="Street Map">
           <TileLayer
@@ -137,34 +222,39 @@ className="map-container"
         </LayersControl.BaseLayer>
       </LayersControl>
 
+      {/* Automatically fit map to stations */}
       <FitMapToStations stations={stations} />
 
+      {/* State Boundaries */}
       {states && (
-  <GeoJSON
-    data={states}
-    style={{
-      color: "#555",
-      weight: 1,
-      fillOpacity: 0.05,
-    }}
-    onEachFeature={(feature, layer) => {
-      layer.on({
-        mouseover: (event) => {
-          event.target.setStyle({
-            weight: 2,
-            fillOpacity: 0.2,
-          });
-        },
-        mouseout: (event) => {
-          event.target.setStyle({
+        <GeoJSON
+          data={states}
+          style={{
+            color: "#555",
             weight: 1,
             fillOpacity: 0.05,
-          });
-        },
-      });
-    }}
-  />
-)}
+          }}
+          onEachFeature={(feature, layer) => {
+            layer.on({
+              mouseover: (event) => {
+                event.target.setStyle({
+                  weight: 2,
+                  fillOpacity: 0.2,
+                });
+              },
+
+              mouseout: (event) => {
+                event.target.setStyle({
+                  weight: 1,
+                  fillOpacity: 0.05,
+                });
+              },
+            });
+          }}
+        />
+      )}
+
+      {/* Station Markers */}
       <MarkerClusterGroup>
         {stations?.features.map((station, index) => {
           const [longitude, latitude] = station.geometry.coordinates;
@@ -180,40 +270,44 @@ className="map-container"
               }
             >
               <Popup>
-  <div className="station-popup">
-    <h3>{station.properties.name}</h3>
+                <div className="station-popup">
+                  <h3>{station.properties.name}</h3>
 
-    <div className="popup-status">
-      <strong>Status:</strong>{" "}
-      {station.properties.status}
-    </div>
+                  <div className="popup-status">
+                    <strong>Status:</strong>{" "}
+                    {station.properties.status}
+                  </div>
 
-    <p>
-      <strong>State:</strong> {station.properties.state}
-    </p>
+                  <p>
+                    <strong>State:</strong>{" "}
+                    {station.properties.state}
+                  </p>
 
-    <p>
-      <strong>District:</strong> {station.properties.district || "N/A"}
-    </p>
+                  <p>
+                    <strong>District:</strong>{" "}
+                    {station.properties.district || "N/A"}
+                  </p>
 
-    <p>
-      <strong>Mast Height:</strong>{" "}
-      {station.properties.mast_height
-        ? `${station.properties.mast_height} m`
-        : "N/A"}
-    </p>
+                  <p>
+                    <strong>Mast Height:</strong>{" "}
+                    {station.properties.mast_height
+                      ? `${station.properties.mast_height} m`
+                      : "N/A"}
+                  </p>
 
-    <p>
-      <strong>Coordinates:</strong><br />
-      {latitude}, {longitude}
-    </p>
-  </div>
-</Popup>
+                  <p>
+                    <strong>Coordinates:</strong>
+                    <br />
+                    {latitude}, {longitude}
+                  </p>
+                </div>
+              </Popup>
             </Marker>
           );
         })}
       </MarkerClusterGroup>
 
+      {/* Legend */}
       <MapLegend />
     </MapContainer>
   );

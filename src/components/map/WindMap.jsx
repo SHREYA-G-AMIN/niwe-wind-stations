@@ -139,8 +139,32 @@ className="map-container"
 
       <FitMapToStations stations={stations} />
 
-      {states && <GeoJSON data={states} />}
-
+      {states && (
+  <GeoJSON
+    data={states}
+    style={{
+      color: "#555",
+      weight: 1,
+      fillOpacity: 0.05,
+    }}
+    onEachFeature={(feature, layer) => {
+      layer.on({
+        mouseover: (event) => {
+          event.target.setStyle({
+            weight: 2,
+            fillOpacity: 0.2,
+          });
+        },
+        mouseout: (event) => {
+          event.target.setStyle({
+            weight: 1,
+            fillOpacity: 0.05,
+          });
+        },
+      });
+    }}
+  />
+)}
       <MarkerClusterGroup>
         {stations?.features.map((station, index) => {
           const [longitude, latitude] = station.geometry.coordinates;

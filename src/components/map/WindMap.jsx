@@ -199,6 +199,7 @@ function WindMap({ stations, states }) {
       center={[20.5937, 78.9629]}
       zoom={5}
       className="map-container"
+      scrollWheelZoom={false}
     >
       <FullscreenControl />
 

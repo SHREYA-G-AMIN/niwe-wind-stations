@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import {
   MapContainer,
   TileLayer,
@@ -12,8 +12,6 @@ import {
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
-import "leaflet.fullscreen";
-import "leaflet.fullscreen/dist/Control.FullScreen.css";
 
 // --------------------
 // Marker Icons
@@ -111,30 +109,6 @@ function FitMapToStations({ stations }) {
 }
 
 // --------------------
-// Fullscreen Control
-// --------------------
-
-function FullscreenControl() {
-  const map = useMap();
-
-  useEffect(() => {
-    const fullscreenControl = L.control.fullscreen({
-      position: "topleft",
-      title: "View Fullscreen",
-      titleCancel: "Exit Fullscreen",
-    });
-
-    fullscreenControl.addTo(map);
-
-    return () => {
-      map.removeControl(fullscreenControl);
-    };
-  }, [map]);
-
-  return null;
-}
-
-// --------------------
 // Scale Control
 // --------------------
 
@@ -178,11 +152,13 @@ function ResetMapControl() {
         left: "10px",
         zIndex: 1000,
         background: "white",
+        color: "black",
         border: "2px solid rgba(0,0,0,0.2)",
         borderRadius: "4px",
         padding: "6px 10px",
         cursor: "pointer",
         fontSize: "14px",
+        fontWeight: "500",
       }}
     >
       🇮🇳 Reset India
@@ -194,7 +170,44 @@ function ResetMapControl() {
 // Wind Map
 // --------------------
 
-function WindMap({ stations, states }) {
+function WindMap({ stations: stationsProp, states: statesProp }) {
+  const [stations, setStations] = useState(stationsProp || null);
+  const [states, setStates] = useState(statesProp || null);
+
+  // Load station data
+  useEffect(() => {
+    if (stationsProp) {
+      setStations(stationsProp);
+      return;
+    }
+
+    fetch("/data/stations.geojson")
+      .then((response) => response.json())
+      .then((data) => {
+        setStations(data);
+      })
+      .catch((error) => {
+        console.error("Failed to load station data:", error);
+      });
+  }, [stationsProp]);
+
+  // Load state boundaries
+  useEffect(() => {
+    if (statesProp) {
+      setStates(statesProp);
+      return;
+    }
+
+    fetch("/data/india-states.json")
+      .then((response) => response.json())
+      .then((data) => {
+        setStates(data);
+      })
+      .catch((error) => {
+        console.error("Failed to load state boundaries:", error);
+      });
+  }, [statesProp]);
+
   return (
     <MapContainer
       center={[20.5937, 78.9629]}
@@ -202,8 +215,6 @@ function WindMap({ stations, states }) {
       className="map-container"
       scrollWheelZoom={false}
     >
-      <FullscreenControl />
-
       <ScaleControl />
 
       <ResetMapControl />
@@ -258,63 +269,66 @@ function WindMap({ stations, states }) {
       )}
 
       {/* Station Markers */}
-      <MarkerClusterGroup>
-        {stations?.features.map((station, index) => {
-          const [longitude, latitude] = station.geometry.coordinates;
+      {stations?.features && (
+        <MarkerClusterGroup>
+          {stations.features.map((station, index) => {
+            const [longitude, latitude] =
+              station.geometry.coordinates;
 
-          return (
-            <Marker
-              key={index}
-              position={[latitude, longitude]}
-              icon={
-                station.properties.status === "In Operation"
-                  ? operationIcon
-                  : closedIcon
-              }
-            >
-              <Tooltip>
-                <strong>{station.properties.name}</strong>
-                <br />
-                Status: {station.properties.status}
-              </Tooltip>
+            return (
+              <Marker
+                key={index}
+                position={[latitude, longitude]}
+                icon={
+                  station.properties.status === "In Operation"
+                    ? operationIcon
+                    : closedIcon
+                }
+              >
+                <Tooltip>
+                  <strong>{station.properties.name}</strong>
+                  <br />
+                  Status: {station.properties.status}
+                </Tooltip>
 
-              <Popup>
-                <div className="station-popup">
-                  <h3>{station.properties.name}</h3>
+                <Popup>
+                  <div className="station-popup">
+                    <h3>{station.properties.name}</h3>
 
-                  <div className="popup-status">
-                    <strong>Status:</strong>{" "}
-                    {station.properties.status}
+                    <div className="popup-status">
+                      <strong>Status:</strong>{" "}
+                      {station.properties.status}
+                    </div>
+
+                    <p>
+                      <strong>State:</strong>{" "}
+                      {station.properties.state}
+                    </p>
+
+                    <p>
+                      <strong>District:</strong>{" "}
+                      {station.properties.district || "N/A"}
+                    </p>
+
+                    <p>
+                      <strong>Mast Height:</strong>{" "}
+                      {station.properties.mast_height
+                        ? `${station.properties.mast_height} m`
+                        : "N/A"}
+                    </p>
+
+                    <p>
+                      <strong>Coordinates:</strong>
+                      <br />
+                      {latitude}, {longitude}
+                    </p>
                   </div>
-
-                  <p>
-                    <strong>State:</strong>{" "}
-                    {station.properties.state}
-                  </p>
-
-                  <p>
-                    <strong>District:</strong>{" "}
-                    {station.properties.district || "N/A"}
-                  </p>
-
-                  <p>
-                    <strong>Mast Height:</strong>{" "}
-                    {station.properties.mast_height
-                      ? `${station.properties.mast_height} m`
-                      : "N/A"}
-                  </p>
-
-                  <p>
-                    <strong>Coordinates:</strong>
-                    <br />
-                    {latitude}, {longitude}
-                  </p>
-                </div>
-              </Popup>
-            </Marker>
-          );
-        })}
-      </MarkerClusterGroup>
+                </Popup>
+              </Marker>
+            );
+          })}
+        </MarkerClusterGroup>
+      )}
 
       {/* Legend */}
       <MapLegend />

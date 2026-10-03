@@ -11,6 +11,8 @@ import {
 import MarkerClusterGroup from "react-leaflet-cluster";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import "leaflet.fullscreen";
+import "leaflet.fullscreen/dist/Control.FullScreen.css";
 
 const operationIcon = new L.Icon({
   iconUrl:
@@ -71,26 +73,55 @@ function MapLegend() {
   return null;
 }
 
-function WindMap() {
-  const [states, setStates] = useState(null);
-  const [stations, setStations] = useState(null);
+function FitMapToStations({ stations }) {
+  const map = useMap();
 
   useEffect(() => {
-    fetch("/data/india-states.json")
-      .then((response) => response.json())
-      .then((data) => setStates(data));
+    if (!stations?.features?.length) return;
 
-    fetch("/data/stations.geojson")
-      .then((response) => response.json())
-      .then((data) => setStations(data));
-  }, []);
+    const bounds = L.latLngBounds(
+      stations.features.map((station) => {
+        const [longitude, latitude] = station.geometry.coordinates;
+        return [latitude, longitude];
+      })
+    );
 
+    map.fitBounds(bounds, {
+      padding: [30, 30],
+    });
+  }, [stations, map]);
+
+  return null;
+}
+function FullscreenControl() {
+  const map = useMap();
+
+  useEffect(() => {
+    const fullscreenControl = L.control.fullscreen({
+      position: "topleft",
+      title: "View Fullscreen",
+      titleCancel: "Exit Fullscreen",
+    });
+
+    fullscreenControl.addTo(map);
+
+    return () => {
+      map.removeControl(fullscreenControl);
+    };
+  }, [map]);
+
+  return null;
+}
+
+function WindMap({ stations, states }) {
   return (
     <MapContainer
-      center={[20.5937, 78.9629]}
-      zoom={5}
-      style={{ height: "500px", width: "100%" }}
-    >
+  center={[20.5937, 78.9629]}
+  zoom={5}
+  style={{ height: "500px", width: "100%" }}
+  
+>
+  <FullscreenControl />
       <LayersControl position="topright">
         <LayersControl.BaseLayer checked name="Street Map">
           <TileLayer
@@ -106,6 +137,8 @@ function WindMap() {
           />
         </LayersControl.BaseLayer>
       </LayersControl>
+
+      <FitMapToStations stations={stations} />
 
       {states && <GeoJSON data={states} />}
 
@@ -124,26 +157,26 @@ function WindMap() {
               }
             >
               <Popup>
-  <strong>{station.properties.name}</strong>
-  <hr />
+                <strong>{station.properties.name}</strong>
+                <hr />
 
-  <strong>State:</strong> {station.properties.state}
-  <br />
+                <strong>State:</strong> {station.properties.state}
+                <br />
 
-  <strong>District:</strong> {station.properties.district}
-  <br />
+                <strong>District:</strong> {station.properties.district}
+                <br />
 
-  <strong>Status:</strong> {station.properties.status}
-  <br />
+                <strong>Status:</strong> {station.properties.status}
+                <br />
 
-  <strong>Mast Height:</strong> {station.properties.mast_height} m
-  <br />
+                <strong>Mast Height:</strong> {station.properties.mast_height} m
+                <br />
 
-  <strong>Latitude:</strong> {latitude}
-  <br />
+                <strong>Latitude:</strong> {latitude}
+                <br />
 
-  <strong>Longitude:</strong> {longitude}
-</Popup>
+                <strong>Longitude:</strong> {longitude}
+              </Popup>
             </Marker>
           );
         })}

@@ -124,16 +124,26 @@ function WindMap() {
               }
             >
               <Popup>
-                <strong>{station.properties.name}</strong>
-                <br />
-                State: {station.properties.state}
-                <br />
-                Status: {station.properties.status}
-                <br />
-                Latitude: {latitude}
-                <br />
-                Longitude: {longitude}
-              </Popup>
+  <strong>{station.properties.name}</strong>
+  <hr />
+
+  <strong>State:</strong> {station.properties.state}
+  <br />
+
+  <strong>District:</strong> {station.properties.district}
+  <br />
+
+  <strong>Status:</strong> {station.properties.status}
+  <br />
+
+  <strong>Mast Height:</strong> {station.properties.mast_height} m
+  <br />
+
+  <strong>Latitude:</strong> {latitude}
+  <br />
+
+  <strong>Longitude:</strong> {longitude}
+</Popup>
             </Marker>
           );
         })}

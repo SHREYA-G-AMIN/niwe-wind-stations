@@ -28,6 +28,10 @@ const cardStyle: CSSProperties = {
   border: "1px solid var(--border)",
   borderRadius: "10px",
   boxShadow: "var(--shadow)",
+  boxSizing: "border-box",
+  display: "flex",
+  flexDirection: "column",
+  minHeight: 600,
   minWidth: 0,
   padding: "1.25rem",
   textAlign: "left",
@@ -51,12 +55,35 @@ function StatusChart({ stations }: StatusChartProps) {
   }));
 
   return (
-    <section style={cardStyle} aria-label="Station Status">
+    <section
+      className="station-status-card"
+      style={cardStyle}
+      aria-label="Station Status"
+    >
+      <style>
+        {`
+          @media (max-width: 900px) {
+            .station-status-card {
+              min-height: 450px;
+            }
+          }
+        `}
+      </style>
       <h2 style={{ margin: "0 0 1rem" }}>Station Status</h2>
       {total === 0 ? (
-        <p>No station status data is available.</p>
+        <p
+          style={{
+            alignItems: "center",
+            display: "flex",
+            flex: 1,
+            justifyContent: "center",
+            textAlign: "center",
+          }}
+        >
+          No station status data is available.
+        </p>
       ) : (
-        <div style={{ height: 330, width: "100%" }}>
+        <div style={{ flex: 1, minHeight: 0, width: "100%" }}>
           <ResponsiveContainer width="100%" height="100%">
             <PieChart>
               <Pie

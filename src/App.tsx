@@ -1,12 +1,11 @@
-// @ts-expect-error WindMap is a JavaScript module without a declaration file.
-import WindMap from "./components/map/WindMap";
+import Dashboard from "./components/dashboard/Dashboard";
+import { StationsProvider } from "./context/StationsContext";
 
 function App() {
   return (
-    <div>
-      <h1>NIWE Wind Measurement Stations</h1>
-      <WindMap />
-    </div>
+    <StationsProvider>
+      <Dashboard />
+    </StationsProvider>
   );
 }
 

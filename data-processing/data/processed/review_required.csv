@@ -1,0 +1,47 @@
+﻿id,pdf_page,serial_no,station_name,state,review_reason
+S0098,2,96.0,UTHUMALAI,TAMIL NADU,Closed date 2023-07-08 does not match FY 2022-2023
+S0099,2,97.0,DOMBUCHERY,TAMIL NADU,Closed date 2023-07-06 does not match FY 2022-2023
+S0100,2,98.0,MAVATHUR,TAMIL NADU,Closed date 2023-07-04 does not match FY 2022-2023
+S0101,2,99.0,POLLACHI,TAMIL NADU,Closed date 2023-07-04 does not match FY 2022-2023
+S0114,2,,DHANK (2),GUJARAT,Incomplete latitude (deg/min missing); Incomplete longitude (deg/min missing); Missing coordinates
+S0117,2,114.0,DUMDHA,GUJARAT,latitude seconds missing in PDF; taken as 0; longitude seconds missing in PDF; taken as 0
+S0195,3,191.0,KHAVDA 1,GUJARAT,Closed date 2022-07-03 does not match FY 2021-2022
+S0196,3,192.0,KHAVDA 2,GUJARAT,Closed date 2022-12-15 does not match FY 2021-2022
+S0197,3,193.0,KHAVDA 3,GUJARAT,Closed date 2022-05-31 does not match FY 2021-2022
+S0198,3,194.0,GOGLA,GUJARAT,Closed date 2022-04-12 does not match FY 2021-2022
+S0199,3,195.0,RAMPARA,GUJARAT,Closed date 2022-12-17 does not match FY 2021-2022
+S0201,3,197.0,LAMBA,GUJARAT,Closed date 2023-06-15 does not match FY 2022-2023
+S0202,3,198.0,GADHWALI,GUJARAT,Closed date 2022-12-10 does not match FY 2021-2022
+S0363,5,358.0,SHEDHEWADI,MAHARASHTRA,Closed date 2022-12-22 does not match FY 2021-2022
+S0364,5,359.0,SULEWADI,MAHARASHTRA,Closed date 2022-12-20 does not match FY 2021-2022
+S0365,5,360.0,DHULE,MAHARASHTRA,Closed date 2022-12-19 does not match FY 2021-2022
+S0437,6,430.0,TARIGOPULA (RAMASAMUDRAM),ANDHRA PRADESH,Closed date 2022-10-14 does not match FY 2021-2022
+S0438,6,431.0,HAMPAPURAM,ANDHRA PRADESH,Closed date 2023-07-06 does not match FY 2022-2023
+S0463,6,456.0,DONAKAL,TELANGANA,Closed date 2023-07-07 does not match FY 2022-2023
+S0513,7,505.0,DAMODARA,RAJASTHAN,Closed date 2022-12-14 does not match FY 2021-2022
+S0514,7,506.0,NIMBALA,RAJASTHAN,Closed date 2023-09-09 does not match FY 2022-2023
+S0560,8,552.0,GOKARNA,KARNATAKA,Closed before commenced
+S0596,8,588.0,NULENUR T,KARNATAKA,Closed date 2023-07-04 does not match FY 2022-2023
+S0597,8,589.0,YETTINAHALLI,KARNATAKA,Closed date 2023-07-04 does not match FY 2022-2023
+S0598,8,590.0,NARENDRA,KARNATAKA,Closed date 2022-08-02 does not match FY 2021-2022
+S0599,8,591.0,HALASANGI,KARNATAKA,Closed date 2022-04-26 does not match FY 2021-2022
+S0601,8,593.0,KADAMPUZHA,KERALA,latitude seconds missing in PDF; taken as 0; longitude seconds missing in PDF; taken as 0
+S0697,9,689.0,HEDAPURA,MADHYA PRADESH,Closed date 2023-11-30 does not match FY 2022-2023
+S0701,9,693.0,CORBIN'S PAHAR,ANDAMAN & NICOBAR ISLANDS,latitude seconds missing in PDF; taken as 0; longitude seconds missing in PDF; taken as 0
+S0731,10,723.0,HAWA CAMP,ARUNACHAL PRADESH,Invalid latitude: 28 41 48..55; Missing coordinates
+S0757,10,749.0,UMPHABENG,ASSAM,latitude seconds missing in PDF; taken as 0; longitude seconds missing in PDF; taken as 0
+S0789,11,781.0,KEEZHAYUR,PUDUCHERRY,latitude seconds missing in PDF; taken as 0; longitude seconds missing in PDF; taken as 0
+S0794,11,786.0,ANANDAPUR SAHIB,PUNJAB,latitude seconds missing in PDF; taken as 0; longitude seconds missing in PDF; taken as 0; District missing in PDF
+S0926,13,918.0,LAITLYNGKOT,MEGHALAYA,commenced_on has a 'Reconfigured' note: 08-06-2018 Reconfigured on 21- 09-2019
+S0940,13,932.0,REIEK,MIZORAM,commenced_on has a 'Reconfigured' note: 28-06-2018 Reconfigured on 06- 11-2019
+S0941,13,933.0,VIRENGTE,MIZORAM,commenced_on has a 'Reconfigured' note: 26-06-2018 Reconfigured on 05- 11-2019
+S0944,13,936.0,VENGSANG,MIZORAM,Closed date 2021-01-07 does not match FY 2019-2020
+S0945,13,937.0,BIRCHANDRA NAGAR,TRIPURA,commenced_on has a 'Reconfigured' note: 29-06-2018 Reconfigured on 20-9- 2019; Closed date 2021-01-07 does not match FY 2021-2022
+S0946,13,938.0,JIRANIA,TRIPURA,commenced_on has a 'Reconfigured' note: 27-06-2018 Reconfigured on 22- 09-2019
+S0947,13,939.0,KALASARA,TRIPURA,commenced_on has a 'Reconfigured' note: 28-06-2018 Reconfigured on 19- 09-2019
+S0948,13,940.0,BISHRAMGANJI,TRIPURA,commenced_on has a 'Reconfigured' note: 30-06-2018 Reconfigured on 21- 09-19
+S0949,13,941.0,CHURAIBARI,TRIPURA,commenced_on has a 'Reconfigured' note: 02-07-2018 Reconfigured on 23- 09-2019
+S0965,14,957.0,THOUBAL ATHOKPAM,MANIPUR,Closed date 2021-01-07 does not match FY 2021-2022
+S0968,14,960.0,MOIRANG KONJENGBAM LEIKIA,MANIPUR,Closed date 2021-01-07 does not match FY 2021-2022
+S0969,14,961.0,JANGNOM PHAI,MANIPUR,Closed date 2021-01-07 does not match FY 2021-2022
+S0971,14,963.0,MONGPIJANG,MANIPUR,Closed date 2021-01-07 does not match FY 2021-2022

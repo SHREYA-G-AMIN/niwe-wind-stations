@@ -1,0 +1,16 @@
+{
+  "data_source": "NIWE / Government of India (MNRE list as on 31.07.2026)",
+  "total_records": 1004,
+  "records_by_source_table": {
+    "Mast": 924,
+    "Telecom tower": 80
+  },
+  "records_by_status": {
+    "Closed": 1000,
+    "Operational": 4
+  },
+  "records_missing_coordinates": 2,
+  "records_requiring_review": 46,
+  "missing_pdf_serial_numbers": [],
+  "last_processed": "2026-10-04T11:00:02"
+}

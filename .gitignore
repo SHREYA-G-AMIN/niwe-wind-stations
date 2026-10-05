@@ -22,3 +22,11 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+.venv/
+.pytest_cache/
+__pycache__/
+data-processing/data/processed/raw_*
+data-processing/data/processed/stations_cleaned.csv
+data-processing/data/processed/stations_validated.csv
+data-processing/data/processed/cleaning_review.csv

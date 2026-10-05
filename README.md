@@ -1,212 +1,202 @@
 # NIWE Wind Stations
 
-An interactive web platform for exploring and visualizing NIWE wind measurement stations across India.
+### Interactive Visualization of Wind Measurement Stations Across India
+
+An interactive web application for visualizing and exploring **National Institute of Wind Energy (NIWE)** wind measurement stations across India.
+
+The application combines geospatial visualization with structured station data to make wind measurement locations easier to explore through an interactive map.
 
 ---
 
 ## Overview
 
-This single-page application provides an interactive map interface to explore wind measurement stations maintained by the National Institute of Wind Energy (NIWE) across India. Built for researchers, policymakers, and wind energy professionals to visualize station distribution, operational status, and geographic context.
+The project transforms NIWE wind measurement data into an interactive geographical interface.
 
-**Problem addressed:** NIWE station data was previously available only in static PDF reports, making spatial analysis and quick lookup difficult. This platform transforms that data into an explorable, filterable web map.
+Users can:
+
+* Explore wind measurement stations across India
+* Navigate and zoom across the map
+* Switch between street and satellite map views
+* View clustered station markers
+* Identify station status through marker colors
+* View detailed station information
+* Interact with state boundaries
+* Automatically fit the map to available stations
+* Reset the map to the India view
 
 ---
 
 ## Key Features
 
-| Feature | Description |
-|---------|-------------|
-| **Interactive Map** | Leaflet-powered map with pan, zoom, and layer switching |
-| **Station Markers** | Clustered markers showing all wind measurement stations |
-| **Status Visualization** | Color-coded markers: green (In Operation) / red (Closed) |
-| **Detailed Popups** | Click any station for name, status, state, district, mast height, coordinates |
-| **Base Layers** | Switch between OpenStreetMap (street) and Esri (satellite) |
-| **State Boundaries** | Optional Indian state boundary overlay (GeoJSON) |
-| **Map Controls** | Scale bar, legend, reset-to-India button |
-| **Auto-fit Bounds** | Map automatically centers to show all loaded stations |
-| **Tooltip Hover** | Quick station name + status on hover |
+### Interactive Map
+
+Built with **Leaflet** and **React Leaflet**, providing an interactive map centered on India.
+
+### Station Visualization
+
+Wind measurement stations are displayed as map markers with:
+
+* Station name
+* Operational status
+* State
+* District
+* Mast height
+* Coordinates
+
+### Marker Clustering
+
+Nearby stations are automatically grouped into clusters to keep the map readable and improve visualization when working with a large number of locations.
+
+### Status-Based Markers
+
+Station markers are visually differentiated based on operational status:
+
+* Green — In Operation
+* Red — Closed
+
+### Map Layers
+
+Users can switch between:
+
+* OpenStreetMap street view
+* Esri satellite imagery
+
+### Map Controls
+
+The application includes:
+
+* Station tooltips
+* Detailed station popups
+* Map legend
+* Scale indicator
+* State boundary overlay
+* Automatic station bounds
+* Reset-to-India control
 
 ---
 
-## How It Works
+## Data Flow
 
-```
-┌─────────────────────┐
-│   Public Data Files │
-│  /public/data/      │
-│  • stations.geojson │
-│  • india-states.json│
-└─────────┬───────────┘
-          │ fetch (on load)
-          ▼
-┌─────────────────────┐
-│    WindMap Component│
-│  (React + Leaflet)  │
-├─────────────────────┤
-│ • Load GeoJSON data │
-│ • Render base layers│
-│ • Cluster markers   │
-│ • Bind popups/tooltips│
-│ • Add controls      │
-└─────────────────────┘
+```text
+NIWE Wind Measurement Data
+          |
+          v
+   Python PDF Extraction
+          |
+          v
+      Structured Data
+          |
+          v
+       GeoJSON
+          |
+          v
+ React + Leaflet Application
+          |
+          v
+ Interactive Station Map
 ```
 
-1. **Data Loading**: On mount, the `WindMap` component fetches `stations.geojson` and `india-states.json` from the public directory.
-2. **Rendering**: Stations are rendered as clustered markers using `react-leaflet-cluster`. State boundaries render as a GeoJSON overlay.
-3. **Interaction**: Markers display tooltips on hover and detailed popups on click. Users can toggle base layers and state boundaries via the layer control.
-4. **Controls**: Legend, scale, and reset button provide context and navigation aids.
+The data-processing workflow uses Python and `pdfplumber` to extract information from the NIWE source PDF. The frontend consumes station data in **GeoJSON** format.
 
 ---
 
 ## Technology Stack
 
-| Category | Technologies |
-|----------|--------------|
-| **Framework** | React 19, TypeScript |
-| **Build Tool** | Vite 8 |
-| **Mapping** | Leaflet 1.9, react-leaflet 5, react-leaflet-cluster 4 |
-| **Styling** | CSS (component-scoped via inline styles) |
-| **Linting** | ESLint 10, TypeScript ESLint |
-| **Data Processing** | Python 3, pdfplumber (extract script) |
+| Technology            | Purpose                              |
+| --------------------- | ------------------------------------ |
+| React                 | Frontend application                 |
+| TypeScript            | Type-safe project configuration      |
+| Vite                  | Development server and build tooling |
+| Leaflet               | Interactive map rendering            |
+| React Leaflet         | React integration for Leaflet        |
+| React Leaflet Cluster | Marker clustering                    |
+| Python                | Data processing                      |
+| pdfplumber            | PDF data extraction                  |
+| GeoJSON               | Geospatial station data format       |
 
 ---
 
 ## Project Structure
 
-```
+```text
 niwe-wind-stations/
+│
+├── data-processing/
+│   ├── scripts/
+│   │   └── extract.py
+│   └── requirements.txt
+│
 ├── public/
-│   ├── data/
-│   │   ├── stations.geojson      # Station locations & properties
-│   │   └── india-states.json     # State boundary polygons
-│   ├── favicon.svg
-│   └── icons.svg
+│   └── data/
+│       ├── stations.geojson
+│       └── india-states.json
+│
 ├── src/
 │   ├── components/
 │   │   └── map/
-│   │       └── WindMap.jsx       # Main map component
-│   ├── assets/
-│   │   ├── hero.png
-│   │   ├── react.svg
-│   │   └── vite.svg
-│   ├── App.tsx                   # App entry (renders WindMap)
-│   ├── main.tsx                  # React bootstrap
-│   ├── index.css                 # Global styles
-│   └── App.css                   # App-specific styles
-├── data-processing/
-│   ├── requirements.txt          # Python deps (pdfplumber)
-│   └── scripts/
-│       └── extract.py            # PDF → CSV/GeoJSON extractor
+│   │       └── WindMap.jsx
+│   ├── App.tsx
+│   ├── main.tsx
+│   ├── App.css
+│   └── index.css
+│
 ├── index.html
 ├── package.json
-├── tsconfig.json
-├── tsconfig.app.json
-├── tsconfig.node.json
 ├── vite.config.ts
-├── eslint.config.js
-└── .gitignore
+└── tsconfig.json
 ```
 
 ---
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 18+
-- npm 9+
-
-### Installation
+### 1. Clone the repository
 
 ```bash
-# Clone the repository
 git clone https://github.com/SHREYA-G-AMIN/niwe-wind-stations.git
 cd niwe-wind-stations
+```
 
-# Install dependencies
+### 2. Install dependencies
+
+```bash
 npm install
 ```
 
-### Development
+### 3. Start the development server
 
 ```bash
-# Start dev server with HMR
 npm run dev
 ```
 
-Open `http://localhost:5173` in your browser.
+The application will be available through the local Vite development server.
 
-### Production Build
+### 4. Build for production
 
 ```bash
-# Type-check and build for production
 npm run build
 ```
 
-Output is written to `dist/`.
-
-### Preview Production Build
+### 5. Preview the production build
 
 ```bash
 npm run preview
 ```
 
-### Linting
+---
 
-```bash
-npm run lint
-```
+## Team Contributions
+
+| Contributor       | GitHub                                            | Contribution             |
+| ----------------- | ------------------------------------------------- | ------------------------ |
+| **Shreya G Amin** | [SHREYA-G-AMIN](https://github.com/SHREYA-G-AMIN) | Map & Visualization      |
+| **Moulya Hegde**  | [moulya-hegde](https://github.com/moulya-hegde)   | Search & Filtering       |
+| **Manish D Rao**  | [Manish-D-Rao](https://github.com/Manish-D-Rao)   | Dashboard & Analytics    |
+| **Manya Jain**    | [Manya-Jain-66](https://github.com/Manya-Jain-66) | Station Explorer         |
+| **Ishta P Jain**  | [Ishta-P-Jain](https://github.com/Ishta-P-Jain)   | Data Processing & Export |
 
 ---
 
-## Data Processing (Optional)
+## Repository
 
-The repository includes a Python script to extract station data from the official NIWE PDF report.
-
-```bash
-cd data-processing
-
-# Install Python dependencies
-pip install -r requirements.txt
-
-# Place the PDF at data/raw/LIST_OF_WMS_AS_ON_31072026.pdf
-# Then run extraction
-python scripts/extract.py
-```
-
-Outputs raw tables and text to `data/processed/` for further transformation into the GeoJSON format used by the frontend.
-
----
-
-## Team
-
-| Contributor | GitHub | Contribution |
-|-------------|--------|--------------|
-| Shreya G Amin | [@SHREYA-G-AMIN](https://github.com/SHREYA-G-AMIN) | Map & Visualization |
-| Moulya Hegde | [@moulya-hegde](https://github.com/moulya-hegde) | Search & Filtering |
-| Manish D Rao | [@Manish-D-Rao](https://github.com/Manish-D-Rao) | Dashboard & Analytics |
-| Manya Jain | [@Manya-Jain-66](https://github.com/Manya-Jain-66) | Station Explorer |
-| Ishta P Jain | [@Ishta-P-Jain](https://github.com/Ishta-P-Jain) | Data Processing & Export |
-
----
-
-## Screenshots
-
-> **Note:** Add screenshots here by placing images in `public/screenshots/` and referencing them below.
->
-> ```markdown
-> ![Map View](public/screenshots/map-view.png)
-> ![Station Popup](public/screenshots/station-popup.png)
-> ```
-
----
-
-## License
-
-This project is licensed under the MIT License.
-
----
-
-## Data Source
-
-Station data sourced from **National Institute of Wind Energy (NIWE)**, Ministry of New and Renewable Energy, Government of India. The application visualizes publicly available station metadata; no proprietary or sensitive data is included.
+**GitHub:** [SHREYA-G-AMIN/niwe-wind-stations](https://github.com/SHREYA-G-AMIN/niwe-wind-stations)

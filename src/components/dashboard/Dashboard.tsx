@@ -1,6 +1,11 @@
 // @ts-expect-error WindMap is a JavaScript module without a declaration file.
 import WindMap from "../map/WindMap";
 import { useMemo, useRef, useState } from "react";
+<<<<<<< HEAD
+=======
+import gawcLogo from "../../assets/gawc-logo.png.jpeg";
+import makeInIndiaLogo from "../../assets/make-in-india.png.jpeg";
+>>>>>>> 00e5b37 (Add NIWE portal updates)
 import { useStations } from "../../context/StationsContext";
 import type { StationFeatureCollection } from "../../types/station";
 import InstallationTimeline from "./InstallationTimeline";
@@ -75,9 +80,18 @@ function Dashboard() {
     return (
       <main aria-busy="true" aria-live="polite">
         <p>Loading station analytics...</p>
+<<<<<<< HEAD
       </main>
     );
   }
+=======
+
+        
+      </main>
+    );
+  }
+  
+>>>>>>> 00e5b37 (Add NIWE portal updates)
 
   if (error) {
     return (
@@ -113,8 +127,34 @@ function Dashboard() {
         padding: "clamp(1rem, 3vw, 2rem)",
         width: "100%",
         boxSizing: "border-box",
+<<<<<<< HEAD
       }}
     >
+=======
+        position:"relative",
+      }}
+    >
+    
+  <div
+    style={{
+      position: "absolute",
+      top: "20px",
+      right: "20px",
+      zIndex: 1000,
+    }}
+  >
+    <img
+      src={gawcLogo}
+      alt="GAWC Renewables"
+      style={{
+        width: "100px",
+        height: "auto",
+      }}
+    />
+  </div>
+
+  
+>>>>>>> 00e5b37 (Add NIWE portal updates)
       <style>
         {`
           .dashboard-layout-row {
@@ -349,8 +389,66 @@ function Dashboard() {
         station={selectedStation}
         onClose={() => setSelectedStationId(null)}
       />
+<<<<<<< HEAD
     </main>
   );
 }
 
+=======
+
+            {/* your existing dashboard content */}
+
+      <footer
+        style={{
+          marginTop: "3rem",
+          padding: "1.5rem 2rem",
+          borderTop: "1px solid rgba(255,255,255,0.15)",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+          flexWrap: "wrap",
+          gap: "1rem",
+          color: "#BDBDBD",
+          fontSize: "0.9rem",
+        }}
+      >
+        <div>
+          <div style={{ color: "#FFFFFF", fontWeight: 600 }}>
+            NIWE Wind Measurement Station Portal
+          </div>
+          <div>
+            Developed by Shreya and Team | NMAM Institute of Technology, Nitte
+          </div>
+        </div>
+
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "0.75rem",
+          }}
+        >
+          <span style={{ color: "#FFFFFF", fontWeight: 600 }}>
+            MAKE IN INDIA
+          </span>
+
+          <img
+            src={makeInIndiaLogo}
+            alt="Make in India"
+            style={{
+              height: "45px",
+              width: "auto",
+              objectFit: "contain",
+            }}
+          />
+        </div>
+      </footer>
+
+    </main>
+
+  );
+}
+
+
+>>>>>>> 00e5b37 (Add NIWE portal updates)
 export default Dashboard;

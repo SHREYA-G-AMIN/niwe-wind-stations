@@ -12,6 +12,9 @@ import StatusChart from "./StatusChart";
 import StationDetails from "./StationDetails";
 import StationTable from "./StationTable";
 import WindSpeedChart from "./WindSpeedChart";
+import windTurbine from "../../assets/wind-turbines.jpg";
+
+
 
 const ALL_STATES = "All States";
 
@@ -110,6 +113,7 @@ function Dashboard() {
         display: "flex",
         flexDirection: "column",
         gap: "1.5rem",
+        backgroundImage: `url(${windTurbine})`,
         padding: "clamp(1rem, 3vw, 2rem)",
         width: "100%",
         boxSizing: "border-box",
@@ -349,7 +353,13 @@ function Dashboard() {
         station={selectedStation}
         onClose={() => setSelectedStationId(null)}
       />
+   
+        
+      
     </main>
+    
+    
+    
   );
 }
 

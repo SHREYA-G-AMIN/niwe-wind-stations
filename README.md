@@ -285,7 +285,11 @@ pytest
 | Ishta P Jain | [Ishta-P-Jain](https://github.com/Ishta-P-Jain) | Data Processing & Export |
 
 ---
+## Project Recognition
 
+The revised project received positive feedback during review and is planned to be shared with the **National Institute of Wind Energy (NIWE)**, under the Ministry of New and Renewable Energy (MNRE), Government of India.
+
+---
 ## Repository
 
 Repository Link: [https://github.com/SHREYA-G-AMIN/niwe-wind-stations](https://github.com/SHREYA-G-AMIN/niwe-wind-stations)
